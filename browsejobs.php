@@ -50,6 +50,7 @@ $jobs_result = $stmt->get_result();
             <p class="text-gray-700 mt-1"><?= nl2br(htmlspecialchars($job['description'])) ?></p>
             <p class="text-sm text-gray-500 mt-2">Client: <?= htmlspecialchars($job['client_name']) ?></p>
             <p class="text-sm text-gray-500">Budget: $<?= number_format($job['budget'], 2) ?></p>
+            <p><strong>Deadline:</strong> <?= htmlspecialchars($job['deadline']) ?></p>
 
             <form action="bid.php" method="POST" class="mt-4 flex items-center space-x-4">
               <input type="hidden" name="job_id" value="<?= $job['id'] ?>" />

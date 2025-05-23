@@ -4,14 +4,12 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'freelancer') {
     header("Location: login.html");
     exit();
 }
-
 require 'db.php';
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch bids made by freelancer (to show status)
 $stmt = $conn->prepare("
-    SELECT b.*, j.title, j.description, j.budget, u.name AS client_name
+    SELECT b.*, j.title, j.description, j.budget, j.deadline, u.name AS client_name
     FROM bids b
     JOIN jobs j ON b.job_id = j.id
     JOIN users u ON j.client_id = u.id
@@ -52,12 +50,15 @@ $bids_result = $stmt->get_result();
           <div class="bg-white p-4 rounded shadow">
             <h3 class="text-xl font-semibold"><?= htmlspecialchars($bid['title']) ?></h3>
             <p class="text-gray-700 mt-1"><?= nl2br(htmlspecialchars($bid['description'])) ?></p>
-            <p class="text-sm text-gray-500 mt-2">Budget: $<?= number_format($bid['budget'], 2) ?></p>
+            <p class="text-sm text-gray-500 mt-2">Budget: $<?= number_format($bid['budget'], 2) ?> | Deadline: <?= htmlspecialchars($bid['deadline']) ?></p>
             <p class="text-sm text-gray-500">Client: <?= htmlspecialchars($bid['client_name']) ?></p>
             <p class="text-sm mt-2">
               Bid Amount: <strong>$<?= number_format($bid['bid_amount'], 2) ?></strong><br />
               Status: <span class="font-semibold"><?= htmlspecialchars(ucfirst($bid['status'])) ?></span>
             </p>
+            <div class="mt-2">
+              <a href="edit_bid.php?id=<?= $bid['id'] ?>" class="text-yellow-600 hover:underline">Edit Bid</a>
+            </div>
           </div>
         <?php endwhile; ?>
       </div>
