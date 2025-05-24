@@ -57,7 +57,9 @@ $bids_result = $stmt->get_result();
               Status: <span class="font-semibold"><?= htmlspecialchars(ucfirst($bid['status'])) ?></span>
             </p>
             <div class="mt-2">
-              <a href="edit_bid.php?id=<?= $bid['id'] ?>" class="text-yellow-600 hover:underline">Edit Bid</a>
+              <?php if ($bid['status'] === 'pending'): ?>
+                <a href="edit_bid.php?id=<?= $bid['id'] ?>" class="text-yellow-600 hover:underline">Edit Bid</a>
+              <?php endif; ?>
             </div>
           </div>
         <?php endwhile; ?>
