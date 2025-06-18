@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // ✅ Use role-based redirect here
         if ($role === 'client') {
-            header('Location: ../dashclient.html');
+            header('Location: dashclient.php');
         } else {
-            header('Location: ../dashfreelancer.html');
+            header('Location: dashfreelancer.php');
         }
         exit();
     } else {
